@@ -105,26 +105,22 @@ The server can be used with any MCP-compatible client. The server provides:
 - **Resources**: Access to movie information via URIs like `tmdb:///movie/{id}`
 - **Tools**: 30+ tools for searching and discovering content
 
-### Example Tool Usage
+Add the following to your MCP client configuration (e.g., `mcp_config.json`):
 
-```typescript
-// Search for movies
-await callTool("mcp_tmdb_search_movies", {
-  query: "action",
-  year: 2023,
-  vote_average_gte: 7.0
-});
-
-// Get trending movies
-await callTool("mcp_tmdb_get_trending", {
-  timeWindow: "week"
-});
-
-// Get movie recommendations
-await callTool("mcp_tmdb_get_recommendations", {
-  movieId: "550"
-});
+```json
+{
+  "mcpServers": {
+    "tmdb": {
+      "command": "<YOUR_REPO_PATH>/dist/index.js",
+      "env": {
+        "TMDB_API_KEY": "<PASTE_YOUR_TMDB_API_KEY_HERE>"
+      }
+    }
+  }
+}
 ```
+
+**Note**: Replace the API key with your own TMDB API key. You can get one by registering at [TMDB](https://www.themoviedb.org/settings/api).
 
 ## 📋 Available Tools
 
