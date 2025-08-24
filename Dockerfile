@@ -21,7 +21,7 @@ RUN npm run build
 # Expose a volume if necessary, but here we assume a command line tool
 
 # Cloud Run expects the app to listen on the PORT environment variable
-ENV PORT=8080
+ENV PORT=3000
 EXPOSE $PORT
 
 # Default command - Cloud Run will provide the PORT environment variable
