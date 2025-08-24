@@ -1,0 +1,59 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:$BUILD_ID',
+      '-t', 'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:latest',
+      '.'
+    ]
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:$BUILD_ID'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:latest'
+    ]
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy', 'cinetribe-mcp-tmdb',
+      '--image', 'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:$BUILD_ID',
+      '--region', '${_REGION}',
+      '--platform', 'managed',
+      '--allow-unauthenticated',
+      '--port', '8080',
+      '--cpu', '1',
+      '--memory', '512Mi',
+      '--min-instances', '0',
+      '--max-instances', '10',
+      '--concurrency', '100',
+      '--timeout', '300',
+      '--set-env-vars', 'NODE_ENV=production',
+      '--update-secrets', 'TMDB_API_KEY=tmdb-api-key:latest'
+    ]
+
+# Store images in Google Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:$BUILD_ID'
+  - 'gcr.io/$PROJECT_ID/cinetribe-mcp-tmdb:latest'
+
+# Build options
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+
+# Substitutions for build variables
+substitutions:
+  _REGION: 'us-central1'  # Change this to your preferred region
+
+# Build timeout
+timeout: '1200s'
