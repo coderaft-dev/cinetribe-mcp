@@ -75,6 +75,16 @@ src/
 
 ## 🛠️ Installation
 
+### Option 1: NPM (Recommended)
+
+Install directly from npm:
+
+```bash
+npm install -g @cinetribe/mcp-server-tmdb
+```
+
+### Option 2: From Source
+
 1. Clone the repository:
 ```bash
 git clone <repository-url>
@@ -107,6 +117,22 @@ The server can be used with any MCP-compatible client. The server provides:
 
 Add the following to your MCP client configuration (e.g., `mcp_config.json`):
 
+#### Using NPM (Recommended):
+```json
+{
+  "mcpServers": {
+    "tmdb": {
+      "command": "npx",
+      "args": ["-y", "@cinetribe/mcp-server-tmdb@latest"],
+      "env": {
+        "TMDB_API_KEY": "<PASTE_YOUR_TMDB_API_KEY_HERE>"
+      }
+    }
+  }
+}
+```
+
+#### Using Local Build:
 ```json
 {
   "mcpServers": {

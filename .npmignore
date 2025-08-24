@@ -1,0 +1,48 @@
+# Source files
+src/
+tsconfig.json
+
+# Development files
+.git/
+.gitignore
+.github/
+
+# Build artifacts
+node_modules/
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Documentation (keep README and LICENSE)
+docs/
+*.md
+!README.md
+!LICENSE
+
+# Deployment files
+cloudbuild.yaml
+cloud-run-service.yaml
+Dockerfile
+DEPLOYMENT.md
+.gcloudignore
+
