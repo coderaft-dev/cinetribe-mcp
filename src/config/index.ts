@@ -8,7 +8,11 @@ export const SERVER_CONFIG = {
 
 export const CAPABILITIES = {
   resources: {},
-  tools: {},
+  tools: {
+    listChanged: true,
+    listTools: true,
+    callTools: true,
+  },
 };
 
 // Parameter mappings for API endpoints

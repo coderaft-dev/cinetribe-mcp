@@ -26,6 +26,7 @@ server.setRequestHandler(ReadResourceRequestSchema, ResourceHandlers.handleReadR
 
 // Set up tool list handler
 server.setRequestHandler(ListToolsRequestSchema, async () => {
+  console.log('ListTools request received, returning tools:', TOOL_DEFINITIONS.length);
   return { tools: TOOL_DEFINITIONS };
 });
 
@@ -113,10 +114,17 @@ if (isCloudRun) {
         return;
       }
 
-      if (req.url === '/mcp') {
+      if (req.url && req.url.startsWith('/mcp')) {
         // SSE transport for MCP
         const transport = new SSEServerTransport("/mcp", res);
-        await server.connect(transport);
+        
+        try {
+          await server.connect(transport);
+          console.log('MCP server connected successfully');
+        } catch (error) {
+          console.error('MCP connection error:', error);
+          res.end();
+        }
         return;
       }
 
