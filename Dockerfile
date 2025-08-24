@@ -17,11 +17,15 @@ COPY tsconfig.json ./
 COPY src ./src
 RUN npm run build
 
+# Verify the build output
+RUN ls -la dist/ && echo "Build completed successfully"
+
 # Bundle app source
 # Expose a volume if necessary, but here we assume a command line tool
 
 # Cloud Run expects the app to listen on the PORT environment variable
 ENV PORT=8080
+ENV NODE_ENV=production
 EXPOSE $PORT
 
 # Default command - Cloud Run will provide the PORT environment variable
